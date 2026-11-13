@@ -1,0 +1,5 @@
+# JavaScript packages, installed rather than committed
+node_modules/
+*.sqlite
+*.sqlite3
+*.db
