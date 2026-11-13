@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* Where Tailwind looks for the classes you use. */
+@source "../../templates";
+@source "../../components";
+@source "../../budget";
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --color-ink: #0f1f1a;
+  --color-paper: #f6f4ee;
+  --color-brand-50: #ecfdf5;
+  --color-brand-100: #d1fae5;
+  --color-brand-500: #10a37f;
+  --color-brand-600: #0b7d62;
+  --color-brand-700: #0a654f;
+  --color-brand-900: #0b2e25;
+  --color-gold: #d4a017;
+}
+
+@layer base {
+  body { @apply bg-paper font-sans text-ink antialiased; }
+}
+
+@utility card { @apply rounded-2xl border border-black/5 bg-white shadow-[0_1px_2px_rgba(15,31,26,.04),0_8px_24px_-12px_rgba(15,31,26,.08)]; }
+@utility btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 disabled:opacity-50; }
+@utility btn-primary { @apply btn bg-brand-700 text-white hover:bg-brand-900; }
+@utility btn-secondary { @apply btn border border-slate-300 bg-white text-slate-700 hover:bg-slate-50; }
+@utility btn-danger { @apply btn bg-rose-600 text-white hover:bg-rose-700; }
+@utility btn-ghost { @apply inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-semibold text-slate-500 hover:bg-slate-100 hover:text-slate-800; }
+@utility label { @apply mb-1.5 block text-sm font-semibold text-slate-700; }
+@utility th { @apply px-4 py-3 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase; }
+@utility td { @apply px-4 py-3 text-sm; }
+@utility eyebrow { @apply text-xs font-bold tracking-[.14em] text-brand-600 uppercase; }
+@utility tabular { font-variant-numeric: tabular-nums; }

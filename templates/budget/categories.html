@@ -1,0 +1,42 @@
+@extends("layouts.app")
+<div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+        <p class="eyebrow">Organisation</p>
+        <h1 class="mt-1 font-display text-3xl font-semibold sm:text-4xl">Catégories</h1>
+    </div>
+    <a href="@url('category_create')" class="btn-primary self-start sm:self-auto"><pb-icon name="plus" class="h-4 w-4" /> Nouvelle catégorie</a>
+</div>
+
+<div class="mt-6 grid gap-6 lg:grid-cols-2">
+    @for(group in groups)
+        <section class="card overflow-hidden">
+            <header class="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+                <h2 class="flex items-center gap-2 font-bold">
+                    <span @class("grid h-7 w-7 place-items-center rounded-lg", "bg-emerald-50 text-emerald-700"=group.is_income, "bg-rose-50 text-rose-600"=not group.is_income)>
+                        @if(group.is_income)<pb-icon name="arrow-down" class="h-4 w-4" />@else<pb-icon name="arrow-up" class="h-4 w-4" />@endif
+                    </span>
+                    {{ group.title }}
+                </h2>
+                <a href="@url('category_create')?type={{ group.add_type }}" class="btn-ghost"><pb-icon name="plus" class="h-3.5 w-3.5" /> Ajouter</a>
+            </header>
+            <table class="min-w-full">
+                <thead><tr><th class="th">Nom</th><th class="th text-right">{{ month_label }}</th><th class="th text-right">Opérations</th><th class="th"><span class="sr-only">Actions</span></th></tr></thead>
+                <tbody class="divide-y divide-slate-100">
+                    @for(c in group.rows)
+                        <tr class="hover:bg-slate-50/60">
+                            <td class="td"><a href="{{ c.transactions_url }}" class="flex items-center gap-2 font-semibold hover:underline"><span class="h-3 w-3 rounded-full" style="background: {{ c.color }}"></span>{{ c.name }}</a></td>
+                            <td class="td tabular text-right">{{ c.month_total }}</td>
+                            <td class="td tabular text-right text-slate-500">{{ c.tx_count }}</td>
+                            <td class="td text-right whitespace-nowrap">
+                                <a href="{{ c.edit_url }}" class="btn-ghost" title="Modifier"><pb-icon name="edit" class="h-4 w-4" /><span class="sr-only">Modifier</span></a>
+                                <a href="{{ c.delete_url }}" class="btn-ghost hover:text-rose-600" title="Supprimer"><pb-icon name="trash" class="h-4 w-4" /><span class="sr-only">Supprimer</span></a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="4" class="px-5 py-10 text-center text-sm text-slate-500">Aucune catégorie.</td></tr>
+                    @endfor
+                </tbody>
+            </table>
+        </section>
+    @endfor
+</div>

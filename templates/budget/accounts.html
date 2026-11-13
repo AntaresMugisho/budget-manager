@@ -1,0 +1,51 @@
+@extends("layouts.app")
+<div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+        <p class="eyebrow">Où est votre argent</p>
+        <h1 class="mt-1 font-display text-3xl font-semibold sm:text-4xl">Comptes</h1>
+    </div>
+    <a href="@url('account_create')" class="btn-primary self-start sm:self-auto"><pb-icon name="plus" class="h-4 w-4" /> Nouveau compte</a>
+</div>
+
+<div class="mt-6 grid gap-4 sm:grid-cols-3">
+    <div class="card bg-brand-900 p-5 text-emerald-50 sm:col-span-2">
+        <p class="text-sm font-semibold text-emerald-200/80">Solde total des comptes actifs</p>
+        <p class="tabular mt-2 font-display text-4xl font-semibold">{{ total }}</p>
+        <p class="tabular mt-1 text-sm text-emerald-200/80">≈ {{ total_usd }}</p>
+    </div>
+    <div class="card p-5">
+        <p class="flex items-center gap-2 text-sm font-semibold text-slate-500"><pb-icon name="exchange" class="h-4 w-4" /> Taux utilisé</p>
+        <p class="tabular mt-2 text-2xl font-extrabold">1 $ = {{ rate }}</p>
+        <a href="@url('settings')" class="mt-1 inline-block text-xs font-semibold text-brand-600 hover:underline">Modifier le taux</a>
+    </div>
+</div>
+
+<div class="card mt-6 overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="min-w-full">
+            <thead class="bg-slate-50/80"><tr><th class="th">Compte</th><th class="th">Type</th><th class="th">Devise</th><th class="th text-right">Solde initial</th><th class="th text-right">Solde actuel</th><th class="th text-right">Équiv. CDF</th><th class="th text-right">Opérations</th><th class="th"><span class="sr-only">Actions</span></th></tr></thead>
+            <tbody class="divide-y divide-slate-100">
+                @for(a in rows)
+                    <tr @class("hover:bg-slate-50/60", "opacity-60"=not a.is_active)>
+                        <td class="td font-semibold">
+                            <a href="{{ a.transactions_url }}" class="hover:underline">{{ a.name }}</a>
+                            @if(not a.is_active)<span class="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-bold text-slate-500">Inactif</span>@endif
+                        </td>
+                        <td class="td text-slate-600">{{ a.type }}</td>
+                        <td class="td"><span @class("rounded-md px-2 py-0.5 text-xs font-extrabold", "bg-sky-50 text-sky-700"=a.is_usd, "bg-emerald-50 text-emerald-700"=not a.is_usd)>{{ a.currency }}</span></td>
+                        <td class="td tabular text-right text-slate-500">{{ a.initial }}</td>
+                        <td @class("td tabular text-right font-bold", "text-rose-600"=a.is_negative)>{{ a.balance }}</td>
+                        <td class="td tabular text-right text-slate-500">@if(a.is_usd){{ a.balance_cdf }}@else—@endif</td>
+                        <td class="td tabular text-right text-slate-600">{{ a.tx_count }}</td>
+                        <td class="td text-right whitespace-nowrap">
+                            <a href="{{ a.edit_url }}" class="btn-ghost" title="Modifier"><pb-icon name="edit" class="h-4 w-4" /><span class="sr-only">Modifier</span></a>
+                            <a href="{{ a.delete_url }}" class="btn-ghost hover:text-rose-600" title="Supprimer"><pb-icon name="trash" class="h-4 w-4" /><span class="sr-only">Supprimer</span></a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr><td colspan="8" class="px-4 py-16 text-center"><p class="font-semibold">Aucun compte.</p><p class="mt-1 text-sm text-slate-500">Créez votre premier compte : espèces, mobile money, banque…</p></td></tr>
+                @endfor
+            </tbody>
+        </table>
+    </div>
+</div>

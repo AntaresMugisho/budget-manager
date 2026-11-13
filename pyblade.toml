@@ -1,0 +1,18 @@
+# How this project is put together. See https://docs.pyblade.com/configuration.
+
+# What this project is called.
+[project]
+name = "albatros_budget_manager"
+pyblade_version = "0.3.1"
+
+# What it is built with.
+[stack]
+framework = "django"
+css_framework = "tailwindcss"
+css_framework_version = "4"
+package_manager = "uv"
+js_package_manager = "npm"
+
+# Where its parts are, relative to this file.
+[paths]
+settings = "albatros_budget_manager/settings.py"

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }} · Albatros Budget</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="@static('css/app.css')">
+    @block("head")@endblock
+</head>
+<body class="min-h-screen">
+<div class="flex min-h-screen">
+    {# Barre latérale #}
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 flex w-64 -translate-x-full flex-col bg-brand-900 text-emerald-50 transition-transform lg:translate-x-0">
+        <div class="flex items-center gap-3 px-6 py-6">
+            <span class="grid h-10 w-10 place-items-center rounded-xl bg-gold font-display text-xl font-bold text-brand-900">A</span>
+            <div>
+                <p class="font-display text-lg leading-tight font-semibold">Albatros</p>
+                <p class="text-xs text-emerald-200/70">Budget personnel</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 space-y-1 px-3">
+            @include("partials.nav_link", {"route": "dashboard", "label": "Tableau de bord", "icon": "dashboard"})
+            @include("partials.nav_link", {"route": "transaction_list", "label": "Transactions", "icon": "transactions"})
+            @include("partials.nav_link", {"route": "budget_list", "label": "Budgets", "icon": "target"})
+            @include("partials.nav_link", {"route": "account_list", "label": "Comptes", "icon": "wallet"})
+            @include("partials.nav_link", {"route": "category_list", "label": "Catégories", "icon": "tag"})
+            @include("partials.nav_link", {"route": "settings", "label": "Paramètres", "icon": "settings"})
+        </nav>
+
+        <div class="mx-3 mb-3 rounded-xl bg-white/5 p-4">
+            <p class="flex items-center gap-2 text-xs font-semibold tracking-wide text-emerald-200/80 uppercase">
+                <pb-icon name="exchange" class="h-4 w-4" /> Taux du jour
+            </p>
+            <p class="tabular mt-1 text-sm font-bold">1 $ = {{ nav_rate }}</p>
+            <a href="@url('settings')" class="mt-1 inline-block text-xs text-gold hover:underline">Modifier</a>
+        </div>
+
+        <div class="flex items-center gap-3 border-t border-white/10 px-5 py-4">
+            <span class="grid h-9 w-9 place-items-center rounded-full bg-emerald-50/10 text-sm font-bold">{{ user_initial }}</span>
+            <p class="min-w-0 flex-1 truncate text-sm font-semibold">{{ user_display }}</p>
+            <form method="post" action="@url('logout')">
+                @csrf
+                <button type="submit" title="Se déconnecter" class="rounded-md p-2 text-emerald-200/80 hover:bg-white/10 hover:text-white">
+                    <pb-icon name="logout" class="h-5 w-5" />
+                    <span class="sr-only">Se déconnecter</span>
+                </button>
+            </form>
+        </div>
+    </aside>
+    <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/40 lg:hidden"></div>
+
+    <div class="flex min-w-0 flex-1 flex-col lg:pl-64">
+        {# Barre supérieure mobile #}
+        <header class="sticky top-0 z-20 flex items-center gap-3 border-b border-black/5 bg-paper/90 px-4 py-3 backdrop-blur lg:hidden">
+            <button id="sidebar-toggle" type="button" class="rounded-md p-2 text-slate-700 hover:bg-black/5" aria-label="Ouvrir le menu">
+                <pb-icon name="menu" class="h-6 w-6" />
+            </button>
+            <span class="font-display text-lg font-semibold">Albatros</span>
+            <a href="@url('transaction_create')" class="btn-primary ml-auto px-3 py-1.5"><pb-icon name="plus" class="h-4 w-4" /> Saisir</a>
+        </header>
+
+        <main class="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-10">
+            @if(messages)
+                <div class="mb-6 space-y-2">
+                    @for(message in messages)
+                        <div role="status" @class("flex items-start gap-3 rounded-xl border px-4 py-3 text-sm font-medium", "border-emerald-200 bg-emerald-50 text-emerald-900"=message.tags == "success", "border-rose-200 bg-rose-50 text-rose-900"=message.tags == "error", "border-sky-200 bg-sky-50 text-sky-900"=message.tags == "info", "border-amber-200 bg-amber-50 text-amber-900"=message.tags == "warning")>
+                            @if(message.tags == "error")
+                                <pb-icon name="alert" class="mt-0.5 h-4 w-4 shrink-0" />
+                            @else
+                                <pb-icon name="check" class="mt-0.5 h-4 w-4 shrink-0" />
+                            @endif
+                            <span>{{ message.message }}</span>
+                        </div>
+                    @endfor
+                </div>
+            @endif
+
+            {{ slot }}
+        </main>
+    </div>
+</div>
+
+<script>
+    (function () {
+        var sidebar = document.getElementById("sidebar");
+        var backdrop = document.getElementById("sidebar-backdrop");
+        function toggle(open) {
+            sidebar.classList.toggle("-translate-x-full", !open);
+            backdrop.classList.toggle("hidden", !open);
+        }
+        document.getElementById("sidebar-toggle").addEventListener("click", function () { toggle(true); });
+        backdrop.addEventListener("click", function () { toggle(false); });
+    })();
+</script>
+@block("scripts")@endblock
+</body>
+</html>
