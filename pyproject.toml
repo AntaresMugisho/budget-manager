@@ -3,6 +3,9 @@ name = "albatros-budget-manager"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
+    "antares-dotenv>=1.1.0",
     "django>=6.1.3",
+    "psycopg2-binary>=2.9.13",
     "pyblade>=0.3.1",
+    "python-dotenv>=1.2.4",
 ]

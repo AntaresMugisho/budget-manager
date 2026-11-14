@@ -2,7 +2,7 @@
 
 # What this project is called.
 [project]
-name = "albatros_budget_manager"
+name = "albatros-budget-manager"
 pyblade_version = "0.3.1"
 
 # What it is built with.
@@ -15,4 +15,4 @@ js_package_manager = "npm"
 
 # Where its parts are, relative to this file.
 [paths]
-settings = "albatros_budget_manager/settings.py"
+settings = "config/settings.py"
