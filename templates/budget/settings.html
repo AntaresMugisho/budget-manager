@@ -1,14 +1,14 @@
 @extends("layouts.app")
 <div>
     <p class="eyebrow">Configuration</p>
-    <h1 class="mt-1 font-display text-3xl font-semibold sm:text-4xl">Paramètres</h1>
+    <h1 class="mt-1 tracking-tight text-3xl font-extrabold sm:text-4xl">Paramètres</h1>
 </div>
 
 <div class="mt-6 grid gap-6 lg:grid-cols-[1.3fr_1fr]">
     <section class="card overflow-hidden">
         <div class="border-b border-slate-100 bg-brand-900 p-6 text-emerald-50">
             <p class="flex items-center gap-2 text-sm font-semibold text-emerald-200/80"><pb-icon name="exchange" class="h-4 w-4" /> Taux de change actuel</p>
-            <p class="tabular mt-2 font-display text-4xl font-semibold">1 $ = {{ rate }}</p>
+            <p class="tabular mt-2 tracking-tight text-4xl font-extrabold">1 $ = {{ rate }}</p>
             <p class="mt-1 text-xs text-emerald-200/70">Mis à jour le {{ rate_updated }} · 100 $ = {{ example_cdf }}</p>
         </div>
         <form method="post" class="p-6" novalidate>

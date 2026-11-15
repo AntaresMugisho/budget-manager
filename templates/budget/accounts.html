@@ -2,7 +2,7 @@
 <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
     <div>
         <p class="eyebrow">Où est votre argent</p>
-        <h1 class="mt-1 font-display text-3xl font-semibold sm:text-4xl">Comptes</h1>
+        <h1 class="mt-1 tracking-tight text-3xl font-extrabold sm:text-4xl">Comptes</h1>
     </div>
     <a href="@url('account_create')" class="btn-primary self-start sm:self-auto"><pb-icon name="plus" class="h-4 w-4" /> Nouveau compte</a>
 </div>
@@ -10,7 +10,7 @@
 <div class="mt-6 grid gap-4 sm:grid-cols-3">
     <div class="card bg-brand-900 p-5 text-emerald-50 sm:col-span-2">
         <p class="text-sm font-semibold text-emerald-200/80">Solde total des comptes actifs</p>
-        <p class="tabular mt-2 font-display text-4xl font-semibold">{{ total }}</p>
+        <p class="tabular mt-2 tracking-tight text-4xl font-extrabold">{{ total }}</p>
         <p class="tabular mt-1 text-sm text-emerald-200/80">≈ {{ total_usd }}</p>
     </div>
     <div class="card p-5">
